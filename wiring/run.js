@@ -29,6 +29,7 @@ module.exports = function(RED) {
         this.repeat = n.repeat;
         this.crontab = n.crontab;
         this.once = n.once;
+        this.times = 0;
         var node = this;
         this.interval_id = null;
         this.cronjob = null;
@@ -62,6 +63,9 @@ module.exports = function(RED) {
                 msg.payload = Date.now();
             } else if (this.payloadType == null || this.payloadType == "string") {
                 msg.payload = this.payload;
+            } else if (this.payloadType == "times") {
+                this.times++;
+                msg.payload = this.times;
             } else {
                 msg.payload = "";
             }
