@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    RED.nodes.registerType('digitalwrite',{
+        category: 'output',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            pin: {
+                value: 0, 
+                required: true, 
+                validate: RED.validators.number()
+            }
+        },
+        inputs:1,
+        outputs:0,
+        icon: "file.png",
+        label: function() {
+            return this.name||"Digital Write "+this.pin;
+        }
+    });
+
+    RED.nodes.registerType('digitalread',{
+        category: 'input',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            pin: {
+                value: 0, 
+                required: true, 
+                validate: RED.validators.number()
+            }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"Digital Read "+this.pin;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="digitalwrite">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-pin"><i class="icon-tag"></i> Pin Number</label>
+        <input type="spinner" id="node-input-pin" placeholder="0">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="digitalwrite">
+    <p>Write a value on a pin</p>
+</script>
+
+
+<script type="text/x-red" data-template-name="digitalread">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-pin"><i class="icon-tag"></i> Pin Number</label>
+        <input type="number" id="node-input-pin" placeholder="0">
+    </div>
+    <div class="form-row">
+        <label for=""><i class="icon-repeat"></i> Read</label>
+        <select id="inject-time-type-select"  style="width: 288px"><option value="interval">interval</option><option value="on_input">when receive message</option></select>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="digitalread">
+    <p>Read a value on a pin</p>
+</script>
