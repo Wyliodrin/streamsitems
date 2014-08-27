@@ -12,7 +12,7 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         var node = this;
         this.on('input', function(msg) {
-        	wyliodrin.digitalWrite (config.pin, parseInt (msg.payload));
+        	wyliodrin.digitalWrite (parseInt(config.pin), parseInt (msg.payload));
             node.send(null);
         });
     }
@@ -30,7 +30,7 @@ module.exports = function(RED) {
             this.inputs = 0;
         }
         this.on('input', function(msg) {
-            node.send({payload: wyliodrin.digitalRead (config.pin)});
+            node.send({payload: wyliodrin.digitalRead (parseInt(config.pin))});
         });
     }
     RED.nodes.registerType("digitalread",digitalWrite);
