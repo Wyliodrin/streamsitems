@@ -12,6 +12,7 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         var node = this;
         this.on('input', function(msg) {
+            console.log (msg);
         	wyliodrin.digitalWrite (parseInt(config.pin), parseInt (msg.payload));
             node.send(null);
         });
