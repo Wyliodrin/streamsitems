@@ -8,12 +8,18 @@ module.exports = function(RED) {
 		wyliodrin = require ('wyliodrin');
 	}
 
+    RED.wyliodrin = {
+        pinModes: [];
+    };
+
     function digitalWrite(config) {
         RED.nodes.createNode(this,config);
         var node = this;
         this.on('input', function(msg) {
-            console.log (msg);
-            wyliodrin.pinMode (parseInt(config.pin), wyliodrin.OUTPUT);
+            if (RED.wyliodrin.pinMode[config.pin] !== wyliodrin.OUTPUT)
+            {
+                wyliodrin.pinMode (parseInt(config.pin), wyliodrin.OUTPUT);    
+            }
         	wyliodrin.digitalWrite (parseInt(config.pin), parseInt (msg.payload));
             node.send(null);
         });
