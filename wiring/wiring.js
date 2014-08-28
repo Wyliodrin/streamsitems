@@ -13,6 +13,7 @@ module.exports = function(RED) {
         var node = this;
         this.on('input', function(msg) {
             console.log (msg);
+            wyliodrin.pinMode (parseInt(config.pin), wyliodrin.OUTPUT);
         	wyliodrin.digitalWrite (parseInt(config.pin), parseInt (msg.payload));
             node.send(null);
         });
