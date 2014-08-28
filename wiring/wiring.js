@@ -9,7 +9,7 @@ module.exports = function(RED) {
 	}
 
     RED.wyliodrin = {
-        pinModes: [];
+        pinModes: []
     };
 
     function digitalWrite(config) {
