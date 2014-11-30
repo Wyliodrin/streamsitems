@@ -8,15 +8,15 @@ module.exports = function(RED) {
 		wyliodrin = require ('wyliodrin');
 	}
 
-    RED.wyliodrin = {
-        pinModes: []
-    };
+    if (!RED.wyliodrin) RED.wyliodrin = {};
+
+    if (!RED.wyliodrin.pinModes) RED.wyliodrin.pinModes = [];
 
     function digitalWrite(config) {
         RED.nodes.createNode(this,config);
         var node = this;
         this.on('input', function(msg) {
-            if (RED.wyliodrin.pinMode[config.pin] !== wyliodrin.OUTPUT)
+            if (RED.wyliodrin.pinModes[config.pin] !== wyliodrin.OUTPUT)
             {
                 wyliodrin.pinMode (parseInt(config.pin), wyliodrin.OUTPUT);    
             }
@@ -29,18 +29,49 @@ module.exports = function(RED) {
     function digitalRead(config) {
         RED.nodes.createNode(this,config);
         var node = this;
-        if (this.interval == "on_input")
-        {
-            this.inputs = 1;
-        }
-        else
-        {
-            this.inputs = 0;
-        }
+        // if (this.interval == "on_input")
+        // {
+        //     this.inputs = 1;
+        // }
+        // else
+        // {
+        //     this.inputs = 0;
+        // }
         this.on('input', function(msg) {
             node.send({payload: wyliodrin.digitalRead (parseInt(config.pin))});
         });
     }
-    RED.nodes.registerType("digitalread",digitalWrite);
+    RED.nodes.registerType("digitalread",digitalRead);
+
+    function analogWrite(config) {
+        RED.nodes.createNode(this,config);
+        var node = this;
+        this.on('input', function(msg) {
+            // if (RED.wyliodrin.pinModes[config.pin] !== wyliodrin.OUTPUT)
+            // {
+            //     wyliodrin.pinMode (parseInt(config.pin), wyliodrin.OUTPUT);    
+            // }
+            wyliodrin.analogWrite (parseInt(config.pin), parseInt (msg.payload));
+            node.send(null);
+        });
+    }
+    RED.nodes.registerType("analogwrite",analogWrite);
+
+    function analogRead(config) {
+        RED.nodes.createNode(this,config);
+        var node = this;
+        // if (this.interval == "on_input")
+        // {
+        //     this.inputs = 1;
+        // }
+        // else
+        // {
+        //     this.inputs = 0;
+        // }
+        this.on('input', function(msg) {
+            node.send({payload: wyliodrin.analogRead (parseInt(config.pin))});
+        });
+    }
+    RED.nodes.registerType("analogread",analogRead);
 }
 
